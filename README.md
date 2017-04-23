@@ -1,6 +1,7 @@
 # repo-github
 
-> A Vue.js project
+> แก้ไขไฟล์ /src/api/index.js
+> `token YORU_API_TOKEN` นำ Token ของ github มาวางแทนที่ YORU_API_TOKEN 
 
 ## Build Setup
 
