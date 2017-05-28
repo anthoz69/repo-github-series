@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="box">
+  <router-link v-if="data" :to="{ name: 'repoDetail', params: { username: data.full_name } }" class="box">
     <article class="media">
       <div class="media-left">
         <figure class="image is-64x64">
@@ -55,7 +55,7 @@
         </div>
       </div>
     </nav>
-  </div>
+  </router-link>
 </template>
 
 <script>
@@ -70,6 +70,7 @@ export default {
   },
   created () {
     fetchGitHubRepo(this.repoName).then((res) => {
+      console.log(res)
       this.data = res.data
     })
   }
