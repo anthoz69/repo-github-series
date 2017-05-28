@@ -65,12 +65,11 @@ export default {
   props: ['repoName'],
   data () {
     return {
-      data: {}
+      data: null
     }
   },
   created () {
     fetchGitHubRepo(this.repoName).then((res) => {
-      console.log(res)
       this.data = res.data
     })
   }
