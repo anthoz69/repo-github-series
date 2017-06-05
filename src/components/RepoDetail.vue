@@ -6,28 +6,41 @@
         <RepoList :user="user" :key="user.id"></RepoList>
       </div>
     </div>
+    <infinite-loading :on-infinite="onInfinite" ref="infiniteLoading"></infinite-loading>
   </section>
 </template>
 
 <script>
 import { fetchGitHubSubscribers } from '@/api/'
 import RepoList from './RepoList'
+import InfiniteLoading from 'vue-infinite-loading'
 
 export default {
   components: {
-    RepoList
+    RepoList,
+    InfiniteLoading
   },
   data () {
     return {
       repoName: this.$route.params.username,
-      listSubscribers: null
+      listSubscribers: [],
+      page: 1
     }
   },
   created () {
-    fetchGitHubSubscribers(this.repoName).then((response) => {
-      console.log(response)
-      this.listSubscribers = response.data
-    })
+    this.fetchData()
+  },
+  methods: {
+    onInfinite () {
+      this.page = this.page + 1
+      this.fetchData()
+    },
+    fetchData () {
+      fetchGitHubSubscribers(this.repoName, this.page).then((response) => {
+        this.listSubscribers = this.listSubscribers.concat(response.data)
+        this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded')
+      })
+    }
   }
 }
 </script>
